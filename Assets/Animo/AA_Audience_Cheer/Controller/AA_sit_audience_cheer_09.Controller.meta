@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b8d986d882d620042a48543f9c326114
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 240041
+  packageName: AA_Audience_Cheer
+  packageVersion: 1.0
+  assetPath: Assets/Animo/AA_Audience_Cheer/Controller/AA_sit_audience_cheer_09.Controller
+  uploadId: 667078
