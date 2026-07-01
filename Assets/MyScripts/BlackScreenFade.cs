@@ -5,19 +5,52 @@ public class BlackScreenFade : MonoBehaviour
 {
     public CanvasGroup blackGroup;
 
-    public float holdTime = 3f;
-    public float fadeTime = 1f;
+    public float introHoldTime = 3f;
+    public float introFadeOutTime = 1f;
+
+    public float knockdownHoldTime = 1f;
+    public float knockdownFadeOutTime = 1f;
+
+    private Coroutine routine;
 
     private void Start()
     {
-        StartCoroutine(FadeRoutine());
+        routine = StartCoroutine(IntroRoutine());
     }
 
-    private IEnumerator FadeRoutine()
+    public void PlayKnockdownBlack()
     {
-        blackGroup.alpha = 1f;
+        if (routine != null)
+            StopCoroutine(routine);
 
-        yield return new WaitForSeconds(holdTime);
+        routine = StartCoroutine(KnockdownRoutine());
+    }
+
+    private IEnumerator IntroRoutine()
+    {
+        SetBlack(1f, true);
+
+        yield return new WaitForSeconds(introHoldTime);
+
+        yield return FadeOut(introFadeOutTime);
+    }
+
+    private IEnumerator KnockdownRoutine()
+    {
+        SetBlack(1f, true);
+
+        yield return new WaitForSeconds(knockdownHoldTime);
+
+        yield return FadeOut(knockdownFadeOutTime);
+    }
+
+    private IEnumerator FadeOut(float fadeTime)
+    {
+        if (fadeTime <= 0f)
+        {
+            SetBlack(0f, false);
+            yield break;
+        }
 
         float t = 0f;
 
@@ -28,8 +61,12 @@ public class BlackScreenFade : MonoBehaviour
             yield return null;
         }
 
-        blackGroup.alpha = 0f;
+        SetBlack(0f, false);
+    }
 
-        gameObject.SetActive(false);
+    private void SetBlack(float alpha, bool block)
+    {
+        blackGroup.alpha = alpha;
+        blackGroup.blocksRaycasts = block;
     }
 }

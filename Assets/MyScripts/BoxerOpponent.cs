@@ -8,9 +8,12 @@ public class BoxerOpponent : MonoBehaviour
     public Transform LookTarget;
     public Animator AvatarAnimator;
 
+    public Transform WinPoint;
+
     public float FaceRotationSpeed = 8f;
 
     public string PunchTriggerString = "punch";
+    public string CheerTriggerString = "cheer";
 
     private NavMeshAgent agent;
     private bool started;
@@ -35,19 +38,13 @@ public class BoxerOpponent : MonoBehaviour
     private void Update()
     {
         if (!started)
-        {
             return;
-        }
 
         if (ApproachTargetPoint == null)
-        {
             return;
-        }
 
         if (!agent.isOnNavMesh)
-        {
             return;
-        }
 
         agent.isStopped = false;
         agent.SetDestination(ApproachTargetPoint.position);
@@ -66,9 +63,31 @@ public class BoxerOpponent : MonoBehaviour
         }
 
         if (AvatarAnimator != null)
-        {
             AvatarAnimator.SetTrigger(PunchTriggerString);
+    }
+
+    public void PlayWinCheer()
+    {
+        started = false;
+
+        if (agent.isOnNavMesh)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+
+            if (WinPoint != null)
+                agent.Warp(WinPoint.position);
         }
+        else if (WinPoint != null)
+        {
+            transform.position = WinPoint.position;
+        }
+
+        if (WinPoint != null)
+            transform.rotation = WinPoint.rotation;
+
+        if (AvatarAnimator != null)
+            AvatarAnimator.SetTrigger(CheerTriggerString);
     }
 
     private void FacePlayer()
@@ -79,9 +98,7 @@ public class BoxerOpponent : MonoBehaviour
         direction.y = 0f;
 
         if (direction.sqrMagnitude <= 0.001f)
-        {
             return;
-        }
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
