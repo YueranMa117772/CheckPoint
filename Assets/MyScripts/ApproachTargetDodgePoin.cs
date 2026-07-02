@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ApproachTargetDodgePoint : MonoBehaviour
 {
-    public float DodgeAngle = 45f;
+    public float DodgeDistance = 0.5f;
     public float HoldTime = 0.5f;
 
     private Vector3 originalLocalPosition;
@@ -16,20 +16,27 @@ public class ApproachTargetDodgePoint : MonoBehaviour
 
     public void DodgeLeft()
     {
+        MoveToSide(-DodgeDistance);
+    }
+
+    public void DodgeRight()
+    {
+        MoveToSide(DodgeDistance);
+    }
+
+    private void MoveToSide(float xOffset)
+    {
         if (routine != null)
         {
             StopCoroutine(routine);
         }
 
-        routine = StartCoroutine(DodgeRoutine());
+        routine = StartCoroutine(DodgeRoutine(xOffset));
     }
 
-    private IEnumerator DodgeRoutine()
+    private IEnumerator DodgeRoutine(float xOffset)
     {
-        Quaternion leftRotation = Quaternion.Euler(0f, -DodgeAngle, 0f);
-        Vector3 dodgeLocalPosition = leftRotation * originalLocalPosition;
-
-        transform.localPosition = dodgeLocalPosition;
+        transform.localPosition = originalLocalPosition + new Vector3(xOffset, 0f, 0f);
 
         yield return new WaitForSeconds(HoldTime);
 

@@ -8,15 +8,20 @@ public class CountdownClockUI : MonoBehaviour
     public float totalTime = 10f;
     public bool autoStart = true;
 
+    public AudioSource tickAudio;
+
     public UnityEvent OnFinished;
 
     private float timeLeft;
     private bool running;
     private bool finished;
+    private int lastSecond;
 
     private void Start()
     {
         timeLeft = totalTime;
+        lastSecond = Mathf.CeilToInt(timeLeft);
+
         UpdateText();
 
         if (autoStart)
@@ -33,6 +38,18 @@ public class CountdownClockUI : MonoBehaviour
         }
 
         timeLeft -= Time.deltaTime;
+
+        int currentSecond = Mathf.CeilToInt(timeLeft);
+
+        if (currentSecond != lastSecond)
+        {
+            lastSecond = currentSecond;
+
+            if (currentSecond > 0 && tickAudio != null)
+            {
+                tickAudio.Play();
+            }
+        }
 
         if (timeLeft <= 0f)
         {
@@ -54,6 +71,7 @@ public class CountdownClockUI : MonoBehaviour
         timeLeft = totalTime;
         running = true;
         finished = false;
+        lastSecond = Mathf.CeilToInt(timeLeft);
 
         UpdateText();
     }

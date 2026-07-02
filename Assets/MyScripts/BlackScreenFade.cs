@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class BlackScreenFade : MonoBehaviour
 {
@@ -14,12 +13,13 @@ public class BlackScreenFade : MonoBehaviour
 
     public Transform playerToLock;
 
-    public UnityEvent OnKnockdownFadeOutStart;
-
     private Coroutine routine;
 
     private bool locked = false;
+    private bool lockPosition = false;
+
     private Quaternion lockedRotation;
+    private Vector3 lockedPosition;
 
     private void Start()
     {
@@ -32,7 +32,12 @@ public class BlackScreenFade : MonoBehaviour
             return;
 
         if (playerToLock != null)
+        {
             playerToLock.rotation = lockedRotation;
+
+            if (lockPosition)
+                playerToLock.position = lockedPosition;
+        }
     }
 
     public void PlayKnockdownBlack()
@@ -41,6 +46,7 @@ public class BlackScreenFade : MonoBehaviour
             StopCoroutine(routine);
 
         locked = false;
+        lockPosition = false;
 
         routine = StartCoroutine(KnockdownRoutine());
     }
@@ -49,7 +55,7 @@ public class BlackScreenFade : MonoBehaviour
     {
         SetBlack(1f, true);
 
-        LockPlayer();
+        LockPlayer(false);
 
         yield return new WaitForSeconds(introHoldTime);
 
@@ -62,13 +68,11 @@ public class BlackScreenFade : MonoBehaviour
     {
         SetBlack(1f, true);
 
-        LockPlayer();
+        LockPlayer(true);
 
         yield return new WaitForSeconds(knockdownHoldTime);
 
         UnlockPlayer();
-
-        OnKnockdownFadeOutStart.Invoke();
 
         yield return FadeOut(knockdownFadeOutTime);
     }
@@ -99,17 +103,21 @@ public class BlackScreenFade : MonoBehaviour
         blackGroup.blocksRaycasts = block;
     }
 
-    private void LockPlayer()
+    private void LockPlayer(bool shouldLockPosition)
     {
         if (playerToLock == null)
             return;
 
         lockedRotation = playerToLock.rotation;
+        lockedPosition = playerToLock.position;
+
+        lockPosition = shouldLockPosition;
         locked = true;
     }
 
     private void UnlockPlayer()
     {
         locked = false;
+        lockPosition = false;
     }
 }
