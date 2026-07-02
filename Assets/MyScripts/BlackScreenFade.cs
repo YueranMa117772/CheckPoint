@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BlackScreenFade : MonoBehaviour
 {
@@ -11,17 +12,35 @@ public class BlackScreenFade : MonoBehaviour
     public float knockdownHoldTime = 1f;
     public float knockdownFadeOutTime = 1f;
 
+    public Transform playerToLock;
+
+    public UnityEvent OnKnockdownFadeOutStart;
+
     private Coroutine routine;
+
+    private bool locked = false;
+    private Quaternion lockedRotation;
 
     private void Start()
     {
         routine = StartCoroutine(IntroRoutine());
     }
 
+    private void LateUpdate()
+    {
+        if (!locked)
+            return;
+
+        if (playerToLock != null)
+            playerToLock.rotation = lockedRotation;
+    }
+
     public void PlayKnockdownBlack()
     {
         if (routine != null)
             StopCoroutine(routine);
+
+        locked = false;
 
         routine = StartCoroutine(KnockdownRoutine());
     }
@@ -30,7 +49,11 @@ public class BlackScreenFade : MonoBehaviour
     {
         SetBlack(1f, true);
 
+        LockPlayer();
+
         yield return new WaitForSeconds(introHoldTime);
+
+        UnlockPlayer();
 
         yield return FadeOut(introFadeOutTime);
     }
@@ -39,7 +62,13 @@ public class BlackScreenFade : MonoBehaviour
     {
         SetBlack(1f, true);
 
+        LockPlayer();
+
         yield return new WaitForSeconds(knockdownHoldTime);
+
+        UnlockPlayer();
+
+        OnKnockdownFadeOutStart.Invoke();
 
         yield return FadeOut(knockdownFadeOutTime);
     }
@@ -68,5 +97,19 @@ public class BlackScreenFade : MonoBehaviour
     {
         blackGroup.alpha = alpha;
         blackGroup.blocksRaycasts = block;
+    }
+
+    private void LockPlayer()
+    {
+        if (playerToLock == null)
+            return;
+
+        lockedRotation = playerToLock.rotation;
+        locked = true;
+    }
+
+    private void UnlockPlayer()
+    {
+        locked = false;
     }
 }
