@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BlackScreenFade : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class BlackScreenFade : MonoBehaviour
     public float knockdownFadeOutTime = 1f;
 
     public Transform playerToLock;
+
+    public UnityEvent onIntroFadeOutStart;
+    public UnityEvent onKnockdownFadeOutStart;
 
     private Coroutine routine;
 
@@ -59,6 +63,8 @@ public class BlackScreenFade : MonoBehaviour
 
         yield return new WaitForSeconds(introHoldTime);
 
+        onIntroFadeOutStart?.Invoke();
+
         UnlockPlayer();
 
         yield return FadeOut(introFadeOutTime);
@@ -71,6 +77,8 @@ public class BlackScreenFade : MonoBehaviour
         LockPlayer(true);
 
         yield return new WaitForSeconds(knockdownHoldTime);
+
+        onKnockdownFadeOutStart?.Invoke();
 
         UnlockPlayer();
 
