@@ -18,6 +18,12 @@ public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
     public float cooldown = 0.25f;
     public float cooldownClock;
 
+    [Header("Fade Teleport")]
+    public BlackScreenFade blackScreenFade;
+    public float teleportFadeTime = 1.75f;
+
+    private bool teleportingWithFade = false;
+
     private void FixedUpdate()
     {
         if (cooldownClock > 0)
@@ -28,18 +34,47 @@ public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
 
     public void Teleport()
     {
-        if (cooldownClock <= 0)
+        if (cooldownClock > 0)
+            return;
+
+        if (teleportingWithFade)
+            return;
+
+        Debug.Log("Teleporting! " + name);
+
+        cooldownClock = cooldown;
+
+        if (blackScreenFade != null && teleportFadeTime > 0f)
         {
-            Debug.Log("Teleporting! " + name);            
-            cooldownClock = cooldown;
+            StartCoroutine(TeleportWithFadeRoutine());
+        }
+        else
+        {
             ForceTeleport();
         }
-        
+    }
+
+    private IEnumerator TeleportWithFadeRoutine()
+    {
+        teleportingWithFade = true;
+
+        blackScreenFade.PlayTeleportBlack(ForceTeleport, teleportFadeTime);
+
+        yield return new WaitForSeconds(teleportFadeTime);
+
+        teleportingWithFade = false;
     }
 
     public void ForceTeleport()
     {
         Debug.Log("FORCE TELEPORT");
+
+        if (subject == null || destination == null)
+        {
+            Debug.LogWarning("SimpleTeleporter missing subject or destination.");
+            return;
+        }
+
         subject.position = destination.position;
 
         if (syncOrientation)
