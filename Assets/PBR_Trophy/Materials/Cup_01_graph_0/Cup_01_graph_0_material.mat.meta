@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 31e097eb1cb54ed41a74c13c6f011028
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65230
+  packageName: Low Poly Trophy Pack (PBR)
+  packageVersion: 1.0
+  assetPath: Assets/PBR_Trophy/Materials/Cup_01_graph_0/Cup_01_graph_0_material.mat
+  uploadId: 651363

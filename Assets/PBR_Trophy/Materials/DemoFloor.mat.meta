@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f04c956f6134647498a6f79633b7e186
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65230
+  packageName: Low Poly Trophy Pack (PBR)
+  packageVersion: 1.0
+  assetPath: Assets/PBR_Trophy/Materials/DemoFloor.mat
+  uploadId: 651363

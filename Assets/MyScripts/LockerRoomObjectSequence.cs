@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LockerRoomObjectSequence : MonoBehaviour
 {
@@ -8,7 +9,11 @@ public class LockerRoomObjectSequence : MonoBehaviour
     {
         public GameObject sceneObject;
         public GameObject heldObject;
+        public GameObject pickupUI;
         public AudioSource monologueAudio;
+
+        public UnityEvent onPicked;
+
         public bool keepHeldAtEnd;
     }
 
@@ -41,12 +46,16 @@ public class LockerRoomObjectSequence : MonoBehaviour
         busy = true;
 
         SetAllSceneColliders(false);
+        SetAllPickupUI(false);
 
         if (step.sceneObject != null)
             step.sceneObject.SetActive(false);
 
         if (step.heldObject != null)
             step.heldObject.SetActive(true);
+
+        if (step.onPicked != null)
+            step.onPicked.Invoke();
 
         if (step.monologueAudio != null)
         {
@@ -60,6 +69,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
         if (step.keepHeldAtEnd)
         {
             SetAllSceneColliders(false);
+            SetAllPickupUI(false);
             busy = false;
             yield break;
         }
@@ -72,8 +82,14 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         currentStep++;
 
+        SetAllSceneColliders(false);
+        SetAllPickupUI(false);
+
         if (currentStep < steps.Length)
+        {
             SetSceneColliders(steps[currentStep].sceneObject, true);
+            SetPickupUI(steps[currentStep], true);
+        }
 
         busy = false;
     }
@@ -98,10 +114,14 @@ public class LockerRoomObjectSequence : MonoBehaviour
                 steps[i].heldObject.SetActive(false);
 
             SetSceneColliders(steps[i].sceneObject, false);
+            SetPickupUI(steps[i], false);
         }
 
         if (steps.Length > 0)
+        {
             SetSceneColliders(steps[0].sceneObject, true);
+            SetPickupUI(steps[0], true);
+        }
     }
 
     void SetAllSceneColliders(bool enabled)
@@ -122,6 +142,24 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         for (int i = 0; i < colliders.Length; i++)
             colliders[i].enabled = enabled;
+    }
+
+    void SetAllPickupUI(bool active)
+    {
+        if (steps == null)
+            return;
+
+        for (int i = 0; i < steps.Length; i++)
+            SetPickupUI(steps[i], active);
+    }
+
+    void SetPickupUI(Step step, bool active)
+    {
+        if (step == null)
+            return;
+
+        if (step.pickupUI != null)
+            step.pickupUI.SetActive(active);
     }
 
     void StopAllAudio()

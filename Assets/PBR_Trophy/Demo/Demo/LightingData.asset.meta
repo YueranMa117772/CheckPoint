@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3fae032f844e0154a87c4904b7d3a600
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65230
+  packageName: Low Poly Trophy Pack (PBR)
+  packageVersion: 1.0
+  assetPath: Assets/PBR_Trophy/Demo/Demo/LightingData.asset
+  uploadId: 651363

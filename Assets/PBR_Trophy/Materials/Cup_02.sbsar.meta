@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3d8cd0070e2c6be48b0c0453211a355d
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _fileAsset: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65230
+  packageName: Low Poly Trophy Pack (PBR)
+  packageVersion: 1.0
+  assetPath: Assets/PBR_Trophy/Materials/Cup_02.sbsar
+  uploadId: 651363

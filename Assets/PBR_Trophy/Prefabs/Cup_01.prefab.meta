@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cf3f201486b14d74492d322929a80d14
+timeCreated: 1474910911
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65230
+  packageName: Low Poly Trophy Pack (PBR)
+  packageVersion: 1.0
+  assetPath: Assets/PBR_Trophy/Prefabs/Cup_01.prefab
+  uploadId: 651363
