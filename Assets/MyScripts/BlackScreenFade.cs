@@ -44,6 +44,20 @@ public class BlackScreenFade : MonoBehaviour
         }
     }
 
+    public void FullBlackInstant()
+    {
+        if (routine != null)
+        {
+            StopCoroutine(routine);
+            routine = null;
+        }
+
+        locked = false;
+        lockPosition = false;
+
+        SetBlack(1f, true);
+    }
+
     public void PlayKnockdownBlack()
     {
         if (routine != null)

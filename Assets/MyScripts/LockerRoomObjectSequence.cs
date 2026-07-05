@@ -13,6 +13,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
         public AudioSource monologueAudio;
 
         public UnityEvent onPicked;
+        public UnityEvent onDropped;
 
         public bool keepHeldAtEnd;
     }
@@ -79,6 +80,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         if (step.sceneObject != null)
             step.sceneObject.SetActive(true);
+
+        if (step.onDropped != null)
+            step.onDropped.Invoke();
 
         currentStep++;
 
