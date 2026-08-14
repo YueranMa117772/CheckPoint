@@ -15,35 +15,56 @@ public class LockerRoomObjectSequence : MonoBehaviour
         public UnityEvent onPicked;
         public UnityEvent onDropped;
 
+        public UnityEvent onChoicePicked;
+        public UnityEvent onChoiceReleased;
+
+        public bool requiredForCompletion = true;
+        public bool availableAtStart = true;
         public bool keepHeldAtEnd;
+
+        [HideInInspector] public bool inspected;
+        [HideInInspector] public bool interactionEnabled;
+        [HideInInspector] public bool choiceMode;
     }
 
     public Step[] steps;
 
-    int currentStep;
+    public UnityEvent onAllRequiredInspected;
+
     bool busy;
+    bool completionTriggered;
+    int selectedChoiceIndex = -1;
 
     void Start()
     {
         ResetSequence();
     }
 
-    public void PickCurrent()
+    public void PickStep(int index)
     {
         if (busy)
             return;
 
-        if (steps == null || steps.Length == 0)
+        if (!ValidIndex(index))
             return;
 
-        if (currentStep < 0 || currentStep >= steps.Length)
+        Step step = steps[index];
+
+        if (!step.interactionEnabled)
             return;
 
-        StartCoroutine(RunStep(steps[currentStep]));
+        if (step.choiceMode)
+        {
+            SelectChoice(index);
+            return;
+        }
+
+        StartCoroutine(RunInspection(index));
     }
 
-    IEnumerator RunStep(Step step)
+    IEnumerator RunInspection(int index)
     {
+        Step step = steps[index];
         busy = true;
 
         SetAllSceneColliders(false);
@@ -69,8 +90,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         if (step.keepHeldAtEnd)
         {
-            SetAllSceneColliders(false);
-            SetAllPickupUI(false);
+            step.interactionEnabled = false;
             busy = false;
             yield break;
         }
@@ -84,18 +104,173 @@ public class LockerRoomObjectSequence : MonoBehaviour
         if (step.onDropped != null)
             step.onDropped.Invoke();
 
-        currentStep++;
+        step.inspected = true;
+        step.interactionEnabled = false;
 
+        CheckAllRequiredInspected();
+
+        busy = false;
+        RefreshInteractions();
+    }
+
+    public void CompleteHeldInspection(int index)
+    {
+        if (!ValidIndex(index))
+            return;
+
+        Step step = steps[index];
+
+        if (step.heldObject != null)
+            step.heldObject.SetActive(false);
+
+        if (step.sceneObject != null)
+            step.sceneObject.SetActive(true);
+
+        if (step.onDropped != null)
+            step.onDropped.Invoke();
+
+        step.inspected = true;
+        step.interactionEnabled = false;
+
+        CheckAllRequiredInspected();
+
+        busy = false;
+        RefreshInteractions();
+    }
+
+    public void EnableStepAsChoice(int index)
+    {
+        if (!ValidIndex(index))
+            return;
+
+        Step step = steps[index];
+
+        step.choiceMode = true;
+        step.interactionEnabled = true;
+
+        if (step.sceneObject != null)
+            step.sceneObject.SetActive(true);
+
+        if (step.heldObject != null)
+            step.heldObject.SetActive(false);
+
+        if (!busy)
+            RefreshInteractions();
+    }
+
+    public void EnableStep(int index)
+    {
+        if (!ValidIndex(index))
+            return;
+
+        Step step = steps[index];
+
+        step.choiceMode = false;
+        step.interactionEnabled = true;
+
+        if (step.sceneObject != null)
+            step.sceneObject.SetActive(true);
+
+        if (step.heldObject != null)
+            step.heldObject.SetActive(false);
+
+        if (!busy)
+            RefreshInteractions();
+    }
+
+    public void DisableStep(int index)
+    {
+        if (!ValidIndex(index))
+            return;
+
+        Step step = steps[index];
+        step.interactionEnabled = false;
+
+        SetSceneColliders(step.sceneObject, false);
+        SetPickupUI(step, false);
+    }
+
+    void SelectChoice(int index)
+    {
+        busy = true;
         SetAllSceneColliders(false);
         SetAllPickupUI(false);
 
-        if (currentStep < steps.Length)
-        {
-            SetSceneColliders(steps[currentStep].sceneObject, true);
-            SetPickupUI(steps[currentStep], true);
-        }
+        if (selectedChoiceIndex >= 0 && selectedChoiceIndex != index)
+            ReleaseChoice(selectedChoiceIndex);
+
+        Step step = steps[index];
+
+        if (step.sceneObject != null)
+            step.sceneObject.SetActive(false);
+
+        if (step.heldObject != null)
+            step.heldObject.SetActive(true);
+
+        step.interactionEnabled = false;
+        selectedChoiceIndex = index;
+
+        if (step.onChoicePicked != null)
+            step.onChoicePicked.Invoke();
 
         busy = false;
+        RefreshInteractions();
+    }
+
+    public void ClearChoice()
+    {
+        if (selectedChoiceIndex < 0)
+            return;
+
+        ReleaseChoice(selectedChoiceIndex);
+        selectedChoiceIndex = -1;
+        RefreshInteractions();
+    }
+
+    void ReleaseChoice(int index)
+    {
+        if (!ValidIndex(index))
+            return;
+
+        Step step = steps[index];
+
+        if (step.heldObject != null)
+            step.heldObject.SetActive(false);
+
+        if (step.sceneObject != null)
+            step.sceneObject.SetActive(true);
+
+        step.interactionEnabled = true;
+
+        if (step.onChoiceReleased != null)
+            step.onChoiceReleased.Invoke();
+    }
+
+    void CheckAllRequiredInspected()
+    {
+        if (completionTriggered || steps == null)
+            return;
+
+        bool hasRequiredStep = false;
+
+        for (int i = 0; i < steps.Length; i++)
+        {
+            if (!steps[i].requiredForCompletion)
+                continue;
+
+            hasRequiredStep = true;
+
+            if (!steps[i].inspected)
+                return;
+        }
+
+        if (!hasRequiredStep)
+            return;
+
+        completionTriggered = true;
+
+        if (onAllRequiredInspected != null)
+            onAllRequiredInspected.Invoke();
     }
 
     public void ResetSequence()
@@ -103,28 +278,41 @@ public class LockerRoomObjectSequence : MonoBehaviour
         StopAllCoroutines();
         StopAllAudio();
 
-        currentStep = 0;
         busy = false;
+        completionTriggered = false;
+        selectedChoiceIndex = -1;
 
         if (steps == null)
             return;
 
         for (int i = 0; i < steps.Length; i++)
         {
-            if (steps[i].sceneObject != null)
-                steps[i].sceneObject.SetActive(true);
+            Step step = steps[i];
 
-            if (steps[i].heldObject != null)
-                steps[i].heldObject.SetActive(false);
+            step.inspected = false;
+            step.choiceMode = false;
+            step.interactionEnabled = step.availableAtStart;
 
-            SetSceneColliders(steps[i].sceneObject, false);
-            SetPickupUI(steps[i], false);
+            if (step.sceneObject != null)
+                step.sceneObject.SetActive(true);
+
+            if (step.heldObject != null)
+                step.heldObject.SetActive(false);
         }
 
-        if (steps.Length > 0)
+        RefreshInteractions();
+    }
+
+    void RefreshInteractions()
+    {
+        if (steps == null)
+            return;
+
+        for (int i = 0; i < steps.Length; i++)
         {
-            SetSceneColliders(steps[0].sceneObject, true);
-            SetPickupUI(steps[0], true);
+            bool active = steps[i].interactionEnabled && i != selectedChoiceIndex;
+            SetSceneColliders(steps[i].sceneObject, active);
+            SetPickupUI(steps[i], active);
         }
     }
 
@@ -176,5 +364,10 @@ public class LockerRoomObjectSequence : MonoBehaviour
             if (steps[i].monologueAudio != null)
                 steps[i].monologueAudio.Stop();
         }
+    }
+
+    bool ValidIndex(int index)
+    {
+        return steps != null && index >= 0 && index < steps.Length;
     }
 }
