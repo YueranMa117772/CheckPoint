@@ -1,0 +1,432 @@
+fileFormatVersion: 2
+guid: 3004f55f61b35cb49bd2b95a90cc0059
+AssetOrigin:
+  serializedVersion: 1
+  productId: 240041
+  packageName: AA_Audience_Cheer
+  packageVersion: 1.0
+  assetPath: Assets/Animo/AA_Audience_Cheer/Model/Robot.fbx
+  uploadId: 667078
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Robot(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0.7071108, z: 0, w: 0.70710284}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Robot:Bip01
+      parentName: Robot(Clone)
+      position: {x: -0, y: 0.88453037, z: 0}
+      rotation: {x: -0.7071068, y: -1.1698103e-24, z: 1.1698103e-24, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Robot:Bip01 Pelvis
+      parentName: Robot:Bip01
+      position: {x: -5.677336e-10, y: -3.7849046e-10, z: 0.000000076293944}
+      rotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+    - name: Robot:Bip01 L Thigh
+      parentName: Robot:Bip01 Pelvis
+      position: {x: 0.00000015258789, y: 0.000000057926652, z: 0.08866413}
+      rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+      scale: {x: 1, y: 0.9999999, z: 0.9999999}
+    - name: Robot:Bip01 L Calf
+      parentName: Robot:Bip01 L Thigh
+      position: {x: -0.38388503, y: 0.000000113248824, z: -0.00000018119812}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+    - name: Robot:Bip01 L Foot
+      parentName: Robot:Bip01 L Calf
+      position: {x: -0.40887678, y: -0.000000114440844, z: 1.7763568e-17}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 0.9999998, z: 1}
+    - name: Robot:Bip01 L Toe0
+      parentName: Robot:Bip01 L Foot
+      position: {x: -0.079522945, y: 0.13798472, z: -0.0014926052}
+      rotation: {x: 0, y: 0, z: 0.7071068, w: -0.7071068}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000002}
+    - name: Robot:Bip01 LCalfTwist
+      parentName: Robot:Bip01 L Calf
+      position: {x: -0.20443839, y: 0.000005979539, z: -0.00020441055}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 0.99999976, z: 1}
+    - name: Robot:Bip01 LThighTwist
+      parentName: Robot:Bip01 L Thigh
+      position: {x: -0.19194259, y: 0.0000020229818, z: -0.00006599426}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1.0000004}
+    - name: Robot:Bip01 R Thigh
+      parentName: Robot:Bip01 Pelvis
+      position: {x: -1.4210854e-16, y: 0.000000017437197, z: -0.08866409}
+      rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.99999976}
+    - name: Robot:Bip01 R Calf
+      parentName: Robot:Bip01 R Thigh
+      position: {x: -0.3838849, y: -0.000000038146972, z: 0.00000025749205}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000001}
+    - name: Robot:Bip01 R Foot
+      parentName: Robot:Bip01 R Calf
+      position: {x: -0.40887684, y: -0.00000008106232, z: 0.000000019073486}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1}
+    - name: Robot:Bip01 R Toe0
+      parentName: Robot:Bip01 R Foot
+      position: {x: -0.079522826, y: 0.13798471, z: 0.0014926243}
+      rotation: {x: 0, y: 0, z: 0.7071068, w: -0.7071068}
+      scale: {x: 1, y: 0.9999998, z: 1.0000001}
+    - name: Robot:Bip01 RCalfTwist
+      parentName: Robot:Bip01 R Calf
+      position: {x: -0.20443821, y: -0.00000006198883, z: -0.00000012397766}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 0.99999994, z: 1}
+    - name: Robot:Bip01 RThighTwist
+      parentName: Robot:Bip01 R Thigh
+      position: {x: -0.19194244, y: -0.000000019073486, z: -0.0000001335144}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000002}
+    - name: Robot:Bip01 Spine
+      parentName: Robot:Bip01 Pelvis
+      position: {x: -0.116785884, y: -0.000022400049, z: 0.00000053405745}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000005, y: 1.0000014, z: 1.0000005}
+    - name: Robot:Bip01 Spine1
+      parentName: Robot:Bip01 Spine
+      position: {x: -0.11953506, y: -0.00009316206, z: 0.000000076294086}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Robot:Bip01 Spine2
+      parentName: Robot:Bip01 Spine1
+      position: {x: -0.11698844, y: -0.000095771546, z: -0.00000007745046}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1, z: 1.0000004}
+    - name: Robot:Bip01 Neck
+      parentName: Robot:Bip01 Spine2
+      position: {x: -0.2516777, y: -0.00000029563904, z: -0.0000001525873}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000013, y: 1.0000002, z: 1.0000002}
+    - name: Robot:Bip01 Head
+      parentName: Robot:Bip01 Neck
+      position: {x: -0.098993525, y: -0.012320022, z: -0.00000030517344}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: Robot:Bip01 L Clavicle
+      parentName: Robot:Bip01 Spine2
+      position: {x: -0.20415145, y: 0.0076659108, z: 0.018786626}
+      rotation: {x: 0.7071068, y: -0.000000030908623, z: -0.7071068, w: 0.000000030908623}
+      scale: {x: 0.99999994, y: 1.0000005, z: 1}
+    - name: Robot:Bip01 L UpperArm
+      parentName: Robot:Bip01 L Clavicle
+      position: {x: -0.17317611, y: -0.000000085830685, z: 0.00000015258789}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1.0000012}
+    - name: Robot:Bip01 LUpArmTwist
+      parentName: Robot:Bip01 L UpperArm
+      position: {x: -0.13953695, y: 0.0000011444091, z: 0.0000076293945}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999887, y: 1.0000001, z: 1.0000004}
+    - name: Robot:Bip01 L Forearm
+      parentName: Robot:Bip01 L UpperArm
+      position: {x: -0.27907416, y: -4.440892e-18, z: 0.00000015258789}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999996, y: 1.0000006, z: 1.0000001}
+    - name: Robot:Bip01 L ForeTwist
+      parentName: Robot:Bip01 L Forearm
+      position: {x: -0.12336471, y: 0.0000014495849, z: 0.0000082397455}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999998, y: 1.0000001, z: 1.0000004}
+    - name: Robot:Bip01 L Hand
+      parentName: Robot:Bip01 L Forearm
+      position: {x: -0.24673007, y: -0.00000004053116, z: 0.00000015258789}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: -0.7071068}
+      scale: {x: 0.9999998, y: 1.0000002, z: 0.99999994}
+    - name: Robot:Bip01 L Finger0
+      parentName: Robot:Bip01 L Hand
+      position: {x: -0.029526824, y: 0.019159546, z: -0.024757769}
+      rotation: {x: 0, y: 0.3826835, z: 0, w: -0.9238795}
+      scale: {x: 0.9999996, y: 1.0000012, z: 1.0000014}
+    - name: Robot:Bip01 L Finger01
+      parentName: Robot:Bip01 L Finger0
+      position: {x: -0.05150524, y: -0.00000030517577, z: 2.842171e-16}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 0.9999997, z: 1}
+    - name: Robot:Bip01 L Finger02
+      parentName: Robot:Bip01 L Finger01
+      position: {x: -0.031357344, y: 0.000000038146972, z: -0.00000015258789}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1}
+    - name: Robot:Bip01 L Finger1
+      parentName: Robot:Bip01 L Hand
+      position: {x: -0.10196762, y: 0.009044036, z: -0.03216263}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1.0000007, z: 1.0000012}
+    - name: Robot:Bip01 L Finger11
+      parentName: Robot:Bip01 L Finger1
+      position: {x: -0.03209045, y: -0.00000015258789, z: 3.5527136e-17}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999998, y: 1.0000004, z: 0.99999994}
+    - name: Robot:Bip01 L Finger12
+      parentName: Robot:Bip01 L Finger11
+      position: {x: -0.022579193, y: 0.00000015258789, z: 3.5527136e-17}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Robot:Bip01 L Finger4
+      parentName: Robot:Bip01 L Hand
+      position: {x: -0.08548996, y: 0.00984848, z: 0.03298119}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000008}
+    - name: Robot:Bip01 L Finger41
+      parentName: Robot:Bip01 L Finger4
+      position: {x: -0.025064163, y: 0, z: -0.000000076293944}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1.0000005}
+    - name: Robot:Bip01 L Finger42
+      parentName: Robot:Bip01 L Finger41
+      position: {x: -0.019037018, y: 0.00000015258789, z: -0.000000114440915}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 1.0000002}
+    - name: Robot:Bip01 L Finger3
+      parentName: Robot:Bip01 L Hand
+      position: {x: -0.10214004, y: 0.010796356, z: 0.014990694}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000005, z: 1.0000013}
+    - name: Robot:Bip01 L Finger31
+      parentName: Robot:Bip01 L Finger3
+      position: {x: -0.031330947, y: -2.842171e-16, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1.0000004, z: 0.99999994}
+    - name: Robot:Bip01 L Finger32
+      parentName: Robot:Bip01 L Finger31
+      position: {x: -0.019676514, y: 0.00000030517577, z: 0.000000076293944}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999997, y: 0.99999994, z: 1}
+    - name: Robot:Bip01 L Finger2
+      parentName: Robot:Bip01 L Hand
+      position: {x: -0.10484627, y: 0.0080664065, z: -0.008683052}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Robot:Bip01 L Finger21
+      parentName: Robot:Bip01 L Finger2
+      position: {x: -0.035857733, y: -0.00000015258789, z: 0.00000019073485}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1.0000007, z: 1}
+    - name: Robot:Bip01 L Finger22
+      parentName: Robot:Bip01 L Finger21
+      position: {x: -0.022542609, y: 0.00000015258789, z: -0.00000012397766}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000002}
+    - name: Robot:Bip01 R Clavicle
+      parentName: Robot:Bip01 Spine2
+      position: {x: -0.20415008, y: 0.0076748845, z: -0.018794404}
+      rotation: {x: 0.7071068, y: -0.000000030908623, z: 0.7071068, w: -0.000000030908623}
+      scale: {x: 1.0000008, y: 1.0000002, z: 1}
+    - name: Robot:Bip01 R UpperArm
+      parentName: Robot:Bip01 R Clavicle
+      position: {x: -0.173176, y: 0.0000001335144, z: -0.00000030517577}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000013, y: 1, z: 0.9999996}
+    - name: Robot:Bip01 RUpArmTwist
+      parentName: Robot:Bip01 R UpperArm
+      position: {x: -0.13953678, y: -0.0000007629394, z: -0.0000009155273}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000005, y: 1.0000001, z: 1.0000002}
+    - name: Robot:Bip01 R Forearm
+      parentName: Robot:Bip01 R UpperArm
+      position: {x: -0.27907416, y: 0.000000038146972, z: -2.842171e-16}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000007, y: 1, z: 1.0000004}
+    - name: Robot:Bip01 R ForeTwist
+      parentName: Robot:Bip01 R Forearm
+      position: {x: -0.12336498, y: -0.000001373291, z: -0.00000061035155}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1}
+    - name: Robot:Bip01 R Hand
+      parentName: Robot:Bip01 R Forearm
+      position: {x: -0.24672985, y: -0.000000035762785, z: 0.00000030517577}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+      scale: {x: 1.0000005, y: 0.99999994, z: 0.99999994}
+    - name: Robot:Bip01 R Finger0
+      parentName: Robot:Bip01 R Hand
+      position: {x: -0.029526519, y: 0.019158935, z: 0.024757767}
+      rotation: {x: 0, y: 0.38268346, z: 0, w: 0.9238795}
+      scale: {x: 1.0000002, y: 1.0000004, z: 0.9999992}
+    - name: Robot:Bip01 R Finger01
+      parentName: Robot:Bip01 R Finger0
+      position: {x: -0.05150543, y: -0.000000076293944, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: Robot:Bip01 R Finger02
+      parentName: Robot:Bip01 R Finger01
+      position: {x: -0.031356886, y: 0.000000038146972, z: 0.00000015258789}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Robot:Bip01 R Finger1
+      parentName: Robot:Bip01 R Hand
+      position: {x: -0.10196754, y: 0.009043579, z: 0.032162514}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 0.9999997, z: 1}
+    - name: Robot:Bip01 R Finger11
+      parentName: Robot:Bip01 R Finger1
+      position: {x: -0.032090604, y: 0.00000015258789, z: -0.000000057220458}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000007, y: 1.0000007, z: 0.99999994}
+    - name: Robot:Bip01 R Finger12
+      parentName: Robot:Bip01 R Finger11
+      position: {x: -0.022579117, y: 0, z: -0.000000019073486}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Robot:Bip01 R Finger2
+      parentName: Robot:Bip01 R Hand
+      position: {x: -0.10484619, y: 0.0080657955, z: 0.008683014}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.99999946, z: 1.0000001}
+    - name: Robot:Bip01 R Finger21
+      parentName: Robot:Bip01 R Finger2
+      position: {x: -0.03585758, y: -0.00000015258789, z: -0.0000002002716}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000007, y: 1.0000005, z: 0.9999998}
+    - name: Robot:Bip01 R Finger22
+      parentName: Robot:Bip01 R Finger21
+      position: {x: -0.022542343, y: 0, z: -0.000000076293944}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000006, z: 0.99999994}
+    - name: Robot:Bip01 R Finger4
+      parentName: Robot:Bip01 R Hand
+      position: {x: -0.08548996, y: 0.009848327, z: -0.032981113}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999998, y: 0.9999996, z: 1.0000002}
+    - name: Robot:Bip01 R Finger41
+      parentName: Robot:Bip01 R Finger4
+      position: {x: -0.02506382, y: -0.00000015258789, z: 0.000000076293944}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000006, y: 1, z: 1.0000002}
+    - name: Robot:Bip01 R Finger42
+      parentName: Robot:Bip01 R Finger41
+      position: {x: -0.019037208, y: 0.00000030517577, z: 0.000000076293944}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: Robot:Bip01 R Finger3
+      parentName: Robot:Bip01 R Hand
+      position: {x: -0.10214027, y: 0.010796051, z: -0.014990654}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 0.9999997, z: 1}
+    - name: Robot:Bip01 R Finger31
+      parentName: Robot:Bip01 R Finger3
+      position: {x: -0.03133072, y: 2.842171e-16, z: -0.00000028610228}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000007, z: 0.99999994}
+    - name: Robot:Bip01 R Finger32
+      parentName: Robot:Bip01 R Finger31
+      position: {x: -0.019676285, y: 2.842171e-16, z: 0.00000015258789}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1}
+    - name: Robot_Skin
+      parentName: Robot(Clone)
+      position: {x: 0.14210632, y: 0, z: 0.11237487}
+      rotation: {x: 0.00000006657903, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 1
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
