@@ -10,7 +10,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
         public GameObject sceneObject;
         public GameObject heldObject;
         public GameObject pickupUI;
+
         public AudioSource monologueAudio;
+        public AudioSource cheatingMonologueAudio;
 
         public UnityEvent onPicked;
         public UnityEvent onDropped;
@@ -29,6 +31,10 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
     public Step[] steps;
 
+    public Collider[] lockerDoorColliders;
+
+    public bool foundCheating = false;
+
     public UnityEvent onAllRequiredInspected;
 
     bool busy;
@@ -38,6 +44,11 @@ public class LockerRoomObjectSequence : MonoBehaviour
     void Start()
     {
         ResetSequence();
+    }
+
+    public void SetFoundCheating()
+    {
+        foundCheating = true;
     }
 
     public void PickStep(int index)
@@ -67,6 +78,8 @@ public class LockerRoomObjectSequence : MonoBehaviour
         Step step = steps[index];
         busy = true;
 
+        SetLockerDoorColliders(false);
+
         SetAllSceneColliders(false);
         SetAllPickupUI(false);
 
@@ -79,12 +92,17 @@ public class LockerRoomObjectSequence : MonoBehaviour
         if (step.onPicked != null)
             step.onPicked.Invoke();
 
-        if (step.monologueAudio != null)
-        {
-            step.monologueAudio.Stop();
-            step.monologueAudio.Play();
+        AudioSource audioToPlay = step.monologueAudio;
 
-            while (step.monologueAudio.isPlaying)
+        if (foundCheating && step.cheatingMonologueAudio != null)
+            audioToPlay = step.cheatingMonologueAudio;
+
+        if (audioToPlay != null)
+        {
+            audioToPlay.Stop();
+            audioToPlay.Play();
+
+            while (audioToPlay.isPlaying)
                 yield return null;
         }
 
@@ -110,6 +128,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
         CheckAllRequiredInspected();
 
         busy = false;
+
+        SetLockerDoorColliders(true);
+
         RefreshInteractions();
     }
 
@@ -135,6 +156,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
         CheckAllRequiredInspected();
 
         busy = false;
+
+        SetLockerDoorColliders(true);
+
         RefreshInteractions();
     }
 
@@ -281,6 +305,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
         busy = false;
         completionTriggered = false;
         selectedChoiceIndex = -1;
+        foundCheating = false;
+
+        SetLockerDoorColliders(true);
 
         if (steps == null)
             return;
@@ -354,6 +381,18 @@ public class LockerRoomObjectSequence : MonoBehaviour
             step.pickupUI.SetActive(active);
     }
 
+    void SetLockerDoorColliders(bool enabled)
+    {
+        if (lockerDoorColliders == null)
+            return;
+
+        for (int i = 0; i < lockerDoorColliders.Length; i++)
+        {
+            if (lockerDoorColliders[i] != null)
+                lockerDoorColliders[i].enabled = enabled;
+        }
+    }
+
     void StopAllAudio()
     {
         if (steps == null)
@@ -363,6 +402,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
         {
             if (steps[i].monologueAudio != null)
                 steps[i].monologueAudio.Stop();
+
+            if (steps[i].cheatingMonologueAudio != null)
+                steps[i].cheatingMonologueAudio.Stop();
         }
     }
 

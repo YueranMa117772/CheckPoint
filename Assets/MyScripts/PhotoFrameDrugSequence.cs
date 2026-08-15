@@ -22,6 +22,8 @@ public class PhotoFrameDrugSequence : MonoBehaviour
 
     public Transform heldFrame;
     public Vector3 flipRotation = new Vector3(0, 180, 0);
+    public Vector3 flipPositionOffset = new Vector3(0.2f, 0, 0);
+    public Vector3 revealPositionOffset = Vector3.zero;
 
     public GameObject pressFUI;
 
@@ -36,12 +38,17 @@ public class PhotoFrameDrugSequence : MonoBehaviour
     public UnityEvent onFlashbackStart;
 
     FrameState state = FrameState.Waiting;
+
     Quaternion originalRotation;
+    Vector3 originalPosition;
 
     void Start()
     {
         if (heldFrame != null)
+        {
             originalRotation = heldFrame.localRotation;
+            originalPosition = heldFrame.localPosition;
+        }
 
         if (pressFUI != null)
             pressFUI.SetActive(false);
@@ -77,7 +84,13 @@ public class PhotoFrameDrugSequence : MonoBehaviour
             pressFUI.SetActive(false);
 
         if (heldFrame != null)
-            heldFrame.localRotation = originalRotation * Quaternion.Euler(flipRotation);
+        {
+            heldFrame.localRotation =
+                originalRotation * Quaternion.Euler(flipRotation);
+
+            heldFrame.localPosition =
+                originalPosition + flipPositionOffset;
+        }
 
         if (backAudio != null)
         {
@@ -106,6 +119,14 @@ public class PhotoFrameDrugSequence : MonoBehaviour
 
         if (heldTape != null)
             heldTape.SetActive(false);
+
+        if (heldFrame != null)
+        {
+            heldFrame.localPosition =
+                originalPosition +
+                flipPositionOffset +
+                revealPositionOffset;
+        }
 
         if (onDrugRevealed != null)
             onDrugRevealed.Invoke();
