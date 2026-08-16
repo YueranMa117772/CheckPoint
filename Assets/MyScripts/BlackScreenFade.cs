@@ -12,6 +12,8 @@ public class BlackScreenFade : MonoBehaviour
     public float knockdownHoldTime = 1f;
     public float knockdownFadeOutTime = 1f;
 
+    public float teleportBlackHoldTime = 0.2f;
+
     public Transform playerToLock;
 
     public UnityEvent onIntroFadeOutStart;
@@ -77,7 +79,12 @@ public class BlackScreenFade : MonoBehaviour
         locked = false;
         lockPosition = false;
 
-        routine = StartCoroutine(TeleportBlackRoutine(onFullBlack, totalTime));
+        routine = StartCoroutine(
+            TeleportBlackRoutine(
+                onFullBlack,
+                totalTime
+            )
+        );
     }
 
     private IEnumerator IntroRoutine()
@@ -110,7 +117,10 @@ public class BlackScreenFade : MonoBehaviour
         yield return FadeOut(knockdownFadeOutTime);
     }
 
-    private IEnumerator TeleportBlackRoutine(UnityAction onFullBlack, float totalTime)
+    private IEnumerator TeleportBlackRoutine(
+        UnityAction onFullBlack,
+        float totalTime
+    )
     {
         if (blackGroup == null)
         {
@@ -118,17 +128,38 @@ public class BlackScreenFade : MonoBehaviour
             yield break;
         }
 
-        float halfTime = totalTime * 0.5f;
+        float holdTime = Mathf.Clamp(
+            teleportBlackHoldTime,
+            0f,
+            totalTime
+        );
+
+        float fadeTime =
+            (totalTime - holdTime) * 0.5f;
 
         SetBlack(0f, true);
 
-        yield return FadeAlpha(0f, 1f, halfTime);
+        yield return FadeAlpha(
+            0f,
+            1f,
+            fadeTime
+        );
 
         onFullBlack?.Invoke();
 
-        yield return FadeAlpha(1f, 0f, halfTime);
+        yield return new WaitForSeconds(
+            holdTime
+        );
+
+        yield return FadeAlpha(
+            1f,
+            0f,
+            fadeTime
+        );
 
         SetBlack(0f, false);
+
+        routine = null;
     }
 
     private IEnumerator FadeOut(float fadeTime)
@@ -144,14 +175,25 @@ public class BlackScreenFade : MonoBehaviour
         while (t < fadeTime)
         {
             t += Time.deltaTime;
-            blackGroup.alpha = Mathf.Lerp(1f, 0f, t / fadeTime);
+
+            blackGroup.alpha =
+                Mathf.Lerp(
+                    1f,
+                    0f,
+                    t / fadeTime
+                );
+
             yield return null;
         }
 
         SetBlack(0f, false);
     }
 
-    private IEnumerator FadeAlpha(float from, float to, float fadeTime)
+    private IEnumerator FadeAlpha(
+        float from,
+        float to,
+        float fadeTime
+    )
     {
         if (fadeTime <= 0f)
         {
@@ -164,14 +206,24 @@ public class BlackScreenFade : MonoBehaviour
         while (t < fadeTime)
         {
             t += Time.deltaTime;
-            blackGroup.alpha = Mathf.Lerp(from, to, t / fadeTime);
+
+            blackGroup.alpha =
+                Mathf.Lerp(
+                    from,
+                    to,
+                    t / fadeTime
+                );
+
             yield return null;
         }
 
         blackGroup.alpha = to;
     }
 
-    private void SetBlack(float alpha, bool block)
+    private void SetBlack(
+        float alpha,
+        bool block
+    )
     {
         if (blackGroup == null)
             return;
@@ -180,15 +232,22 @@ public class BlackScreenFade : MonoBehaviour
         blackGroup.blocksRaycasts = block;
     }
 
-    private void LockPlayer(bool shouldLockPosition)
+    private void LockPlayer(
+        bool shouldLockPosition
+    )
     {
         if (playerToLock == null)
             return;
 
-        lockedRotation = playerToLock.rotation;
-        lockedPosition = playerToLock.position;
+        lockedRotation =
+            playerToLock.rotation;
 
-        lockPosition = shouldLockPosition;
+        lockedPosition =
+            playerToLock.position;
+
+        lockPosition =
+            shouldLockPosition;
+
         locked = true;
     }
 

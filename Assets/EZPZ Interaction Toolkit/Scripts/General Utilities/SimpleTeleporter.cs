@@ -1,24 +1,17 @@
-//EZPZ Interaction Toolkit
-//by Matt Cabanag
-//created 26 Jul 2022
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
 {
-    [Header("Target Settings")]
     public Transform subject;
     public Transform destination;
     public bool syncOrientation = false;
 
-    [Header("Cooldown Management")]
     public float activaitonDelay = 0.25f;
     public float cooldown = 0.25f;
     public float cooldownClock;
 
-    [Header("Fade Teleport")]
     public BlackScreenFade blackScreenFade;
     public float teleportFadeTime = 1.75f;
 
@@ -44,9 +37,12 @@ public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
 
         cooldownClock = cooldown;
 
-        if (blackScreenFade != null && teleportFadeTime > 0f)
+        if (blackScreenFade != null &&
+            teleportFadeTime > 0f)
         {
-            StartCoroutine(TeleportWithFadeRoutine());
+            StartCoroutine(
+                TeleportWithFadeRoutine()
+            );
         }
         else
         {
@@ -58,9 +54,14 @@ public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
     {
         teleportingWithFade = true;
 
-        blackScreenFade.PlayTeleportBlack(ForceTeleport, teleportFadeTime);
+        blackScreenFade.PlayTeleportBlack(
+            ForceTeleport,
+            teleportFadeTime
+        );
 
-        yield return new WaitForSeconds(teleportFadeTime);
+        yield return new WaitForSeconds(
+            teleportFadeTime
+        );
 
         teleportingWithFade = false;
     }
@@ -69,21 +70,31 @@ public class SimpleTeleporter : MonoBehaviour, ISubjectRelay
     {
         Debug.Log("FORCE TELEPORT");
 
-        if (subject == null || destination == null)
+        if (subject == null ||
+            destination == null)
         {
-            Debug.LogWarning("SimpleTeleporter missing subject or destination.");
+            Debug.LogWarning(
+                "SimpleTeleporter missing subject or destination."
+            );
+
             return;
         }
 
-        subject.position = destination.position;
+        subject.position =
+            destination.position;
 
         if (syncOrientation)
-            subject.transform.rotation = destination.rotation;
+        {
+            subject.rotation =
+                destination.rotation;
+        }
 
         Physics.SyncTransforms();
     }
 
-    void ISubjectRelay.SyncSubject(GameObject newSubject)
+    void ISubjectRelay.SyncSubject(
+        GameObject newSubject
+    )
     {
         subject = newSubject.transform;
     }
