@@ -17,9 +17,6 @@ public class LockerRoomObjectSequence : MonoBehaviour
         public UnityEvent onPicked;
         public UnityEvent onDropped;
 
-        public UnityEvent onChoicePicked;
-        public UnityEvent onChoiceReleased;
-
         public bool requiredForCompletion = true;
         public bool availableAtStart = true;
         public bool keepHeldAtEnd;
@@ -40,6 +37,9 @@ public class LockerRoomObjectSequence : MonoBehaviour
     bool busy;
     bool completionTriggered;
     int selectedChoiceIndex = -1;
+
+    bool[] lockerDoorColliderStates;
+    bool lockerDoorCollidersTemporarilyLocked;
 
     void Start()
     {
@@ -78,7 +78,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
         Step step = steps[index];
         busy = true;
 
-        SetLockerDoorColliders(false);
+        LockLockerDoorColliders();
 
         SetAllSceneColliders(false);
         SetAllPickupUI(false);
@@ -129,7 +129,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         busy = false;
 
-        SetLockerDoorColliders(true);
+        RestoreLockerDoorColliders();
 
         RefreshInteractions();
     }
@@ -157,7 +157,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         busy = false;
 
-        SetLockerDoorColliders(true);
+        RestoreLockerDoorColliders();
 
         RefreshInteractions();
     }
@@ -234,8 +234,8 @@ public class LockerRoomObjectSequence : MonoBehaviour
         step.interactionEnabled = false;
         selectedChoiceIndex = index;
 
-        if (step.onChoicePicked != null)
-            step.onChoicePicked.Invoke();
+        if (step.onPicked != null)
+            step.onPicked.Invoke();
 
         busy = false;
         RefreshInteractions();
@@ -266,8 +266,8 @@ public class LockerRoomObjectSequence : MonoBehaviour
 
         step.interactionEnabled = true;
 
-        if (step.onChoiceReleased != null)
-            step.onChoiceReleased.Invoke();
+        if (step.onDropped != null)
+            step.onDropped.Invoke();
     }
 
     void CheckAllRequiredInspected()
@@ -307,7 +307,7 @@ public class LockerRoomObjectSequence : MonoBehaviour
         selectedChoiceIndex = -1;
         foundCheating = false;
 
-        SetLockerDoorColliders(true);
+        RestoreLockerDoorColliders();
 
         if (steps == null)
             return;
@@ -381,16 +381,40 @@ public class LockerRoomObjectSequence : MonoBehaviour
             step.pickupUI.SetActive(active);
     }
 
-    void SetLockerDoorColliders(bool enabled)
+    void LockLockerDoorColliders()
     {
         if (lockerDoorColliders == null)
             return;
 
+        lockerDoorColliderStates = new bool[lockerDoorColliders.Length];
+
         for (int i = 0; i < lockerDoorColliders.Length; i++)
         {
-            if (lockerDoorColliders[i] != null)
-                lockerDoorColliders[i].enabled = enabled;
+            if (lockerDoorColliders[i] == null)
+                continue;
+
+            lockerDoorColliderStates[i] = lockerDoorColliders[i].enabled;
+            lockerDoorColliders[i].enabled = false;
         }
+
+        lockerDoorCollidersTemporarilyLocked = true;
+    }
+
+    void RestoreLockerDoorColliders()
+    {
+        if (!lockerDoorCollidersTemporarilyLocked || lockerDoorColliders == null)
+            return;
+
+        for (int i = 0; i < lockerDoorColliders.Length; i++)
+        {
+            if (lockerDoorColliders[i] == null)
+                continue;
+
+            if (lockerDoorColliderStates != null && i < lockerDoorColliderStates.Length)
+                lockerDoorColliders[i].enabled = lockerDoorColliderStates[i];
+        }
+
+        lockerDoorCollidersTemporarilyLocked = false;
     }
 
     void StopAllAudio()
