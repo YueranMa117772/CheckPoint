@@ -15,6 +15,9 @@ public class FinalRouteDirector : MonoBehaviour
 
     public bool decisionOpen = false;
 
+    public UnityEvent onBatSelected;
+    public UnityEvent onEvidenceSelected;
+
     public UnityEvent onBatExit;
     public UnityEvent onEvidenceExit;
     public UnityEvent onLeaveExit;
@@ -39,11 +42,16 @@ public class FinalRouteDirector : MonoBehaviour
 
         if (currentRoute != Route.None)
         {
-            Debug.Log("[Route] Bat ignored: route already selected = " + currentRoute);
+            Debug.Log(
+                "[Route] Bat ignored: route already selected = " +
+                currentRoute
+            );
             return;
         }
 
         currentRoute = Route.Bat;
+
+        onBatSelected?.Invoke();
 
         Debug.Log("[Route] BAT selected");
     }
@@ -52,17 +60,24 @@ public class FinalRouteDirector : MonoBehaviour
     {
         if (!decisionOpen)
         {
-            Debug.Log("[Route] Evidence ignored: decision not open");
+            Debug.Log(
+                "[Route] Evidence ignored: decision not open"
+            );
             return;
         }
 
         if (currentRoute != Route.None)
         {
-            Debug.Log("[Route] Evidence ignored: route already selected = " + currentRoute);
+            Debug.Log(
+                "[Route] Evidence ignored: route already selected = " +
+                currentRoute
+            );
             return;
         }
 
         currentRoute = Route.Evidence;
+
+        onEvidenceSelected?.Invoke();
 
         Debug.Log("[Route] EVIDENCE selected");
     }
@@ -71,7 +86,9 @@ public class FinalRouteDirector : MonoBehaviour
     {
         if (!decisionOpen)
         {
-            Debug.Log("[Route] Exit ignored: decision not open");
+            Debug.Log(
+                "[Route] Exit ignored: decision not open"
+            );
             return;
         }
 
@@ -83,26 +100,35 @@ public class FinalRouteDirector : MonoBehaviour
         if (currentRoute == Route.None)
         {
             currentRoute = Route.Leave;
+
             Debug.Log("[Route] LEAVE selected");
         }
 
-        Debug.Log("[Route] Exiting locker room with route = " + currentRoute);
+        Debug.Log(
+            "[Route] Exiting locker room with route = " +
+            currentRoute
+        );
 
         if (currentRoute == Route.Bat)
         {
             Debug.Log("[Route] Starting BAT route");
+
             onBatExit?.Invoke();
         }
 
         else if (currentRoute == Route.Evidence)
         {
-            Debug.Log("[Route] Starting EVIDENCE route");
+            Debug.Log(
+                "[Route] Starting EVIDENCE route"
+            );
+
             onEvidenceExit?.Invoke();
         }
 
         else if (currentRoute == Route.Leave)
         {
             Debug.Log("[Route] Starting LEAVE route");
+
             onLeaveExit?.Invoke();
         }
     }

@@ -40,6 +40,7 @@ public class PoliceArrivalSequence : MonoBehaviour
 
     public AudioSource secondOfficerShootAudio;
 
+    public UnityEvent onSequenceStarted;
     public UnityEvent onBothArrivedGun;
     public UnityEvent onBothArrivedNoGun;
     public UnityEvent onSecondOfficerShoot;
@@ -109,6 +110,8 @@ public class PoliceArrivalSequence : MonoBehaviour
 
         hasGun = gun;
         sequenceStarted = true;
+
+        onSequenceStarted?.Invoke();
 
         StartCoroutine(ArrivalSequence());
     }
@@ -328,12 +331,32 @@ public class PoliceArrivalSequence : MonoBehaviour
         StartCoroutine(SecondOfficerShootAfterDelay());
     }
 
+    public void TriggerSecondOfficerShootImmediate()
+    {
+        if (
+            secondOfficerShootScheduled ||
+            secondOfficerShot
+        )
+        {
+            return;
+        }
+
+        ShootSecondOfficer();
+    }
+
     private IEnumerator SecondOfficerShootAfterDelay()
     {
-        yield return new WaitForSeconds(secondOfficerShootDelay);
+        yield return new WaitForSeconds(
+            secondOfficerShootDelay
+        );
 
         secondOfficerShootScheduled = false;
 
+        ShootSecondOfficer();
+    }
+
+    private void ShootSecondOfficer()
+    {
         if (
             secondOfficer == null ||
             secondOfficerAnimator == null ||
@@ -341,7 +364,7 @@ public class PoliceArrivalSequence : MonoBehaviour
             secondOfficerShot
         )
         {
-            yield break;
+            return;
         }
 
         secondOfficerShot = true;
@@ -358,7 +381,11 @@ public class PoliceArrivalSequence : MonoBehaviour
 
         FacePlayer(secondOfficer.transform);
 
-        secondOfficerAnimator.Play(shootStateName, 0, 0f);
+        secondOfficerAnimator.Play(
+            shootStateName,
+            0,
+            0f
+        );
 
         if (secondOfficerShootAudio != null)
             secondOfficerShootAudio.Play();
@@ -425,6 +452,9 @@ public class PoliceArrivalSequence : MonoBehaviour
         if (character == null || player == null)
             return;
 
-        FaceTarget(character, player.position);
+        FaceTarget(
+            character,
+            player.position
+        );
     }
 }

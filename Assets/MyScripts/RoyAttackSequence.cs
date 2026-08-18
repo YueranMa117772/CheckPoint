@@ -22,11 +22,14 @@ public class RoyAttackSequence : MonoBehaviour
     public string standStateName = "stand";
     public string punchStateName = "punch";
 
-    public UnityEvent onArrived;
+    public UnityEvent onEvidenceArrived;
+    public UnityEvent onLeaveArrived;
 
     private bool sequenceStarted;
     private bool arrived;
     private bool punching;
+
+    private bool evidenceRoute;
 
     private void Update()
     {
@@ -43,7 +46,19 @@ public class RoyAttackSequence : MonoBehaviour
             FaceLookTarget(0f);
     }
 
-    public void StartApproach()
+    public void StartEvidenceApproach()
+    {
+        evidenceRoute = true;
+        StartApproach();
+    }
+
+    public void StartLeaveApproach()
+    {
+        evidenceRoute = false;
+        StartApproach();
+    }
+
+    private void StartApproach()
     {
         if (sequenceStarted)
             return;
@@ -86,9 +101,14 @@ public class RoyAttackSequence : MonoBehaviour
             }
 
             royAgent.isStopped = false;
-            royAgent.SetDestination(approachTargetPoint.position);
+            royAgent.SetDestination(
+                approachTargetPoint.position
+            );
 
-            FaceTarget(approachTargetPoint.position, 0f);
+            FaceTarget(
+                approachTargetPoint.position,
+                0f
+            );
 
             if (HasArrived())
                 break;
@@ -99,13 +119,20 @@ public class RoyAttackSequence : MonoBehaviour
         royAgent.isStopped = true;
         royAgent.ResetPath();
 
-        royAnimator.Play(standStateName, 0, 0f);
+        royAnimator.Play(
+            standStateName,
+            0,
+            0f
+        );
 
         arrived = true;
 
         FaceLookTarget(0f);
 
-        onArrived?.Invoke();
+        if (evidenceRoute)
+            onEvidenceArrived?.Invoke();
+        else
+            onLeaveArrived?.Invoke();
     }
 
     public void StartPunching()
@@ -115,15 +142,27 @@ public class RoyAttackSequence : MonoBehaviour
 
         punching = true;
 
-        if (royAgent != null && royAgent.isOnNavMesh)
+        if (
+            royAgent != null &&
+            royAgent.isOnNavMesh
+        )
         {
             royAgent.isStopped = false;
-            royAgent.SetDestination(approachTargetPoint.position);
+
+            royAgent.SetDestination(
+                approachTargetPoint.position
+            );
         }
 
-        FaceLookTarget(punchRotationOffset);
+        FaceLookTarget(
+            punchRotationOffset
+        );
 
-        royAnimator.Play(punchStateName, 0, 0f);
+        royAnimator.Play(
+            punchStateName,
+            0,
+            0f
+        );
     }
 
     private void UpdatePunchChase()
@@ -138,15 +177,25 @@ public class RoyAttackSequence : MonoBehaviour
         }
 
         royAgent.isStopped = false;
-        royAgent.SetDestination(approachTargetPoint.position);
 
-        FaceLookTarget(punchRotationOffset);
+        royAgent.SetDestination(
+            approachTargetPoint.position
+        );
+
+        FaceLookTarget(
+            punchRotationOffset
+        );
     }
 
     private bool HasArrived()
     {
-        if (royAgent == null || !royAgent.isOnNavMesh)
+        if (
+            royAgent == null ||
+            !royAgent.isOnNavMesh
+        )
+        {
             return false;
+        }
 
         if (royAgent.pathPending)
             return false;
@@ -170,7 +219,9 @@ public class RoyAttackSequence : MonoBehaviour
         return true;
     }
 
-    private void FaceLookTarget(float yawOffset)
+    private void FaceLookTarget(
+        float yawOffset
+    )
     {
         Transform target =
             lookTarget != null
@@ -180,7 +231,10 @@ public class RoyAttackSequence : MonoBehaviour
         if (target == null)
             return;
 
-        FaceTarget(target.position, yawOffset);
+        FaceTarget(
+            target.position,
+            yawOffset
+        );
     }
 
     private void FaceTarget(
@@ -189,22 +243,35 @@ public class RoyAttackSequence : MonoBehaviour
     )
     {
         Vector3 direction =
-            targetPosition - roy.transform.position;
+            targetPosition -
+            roy.transform.position;
 
         direction.y = 0f;
 
-        if (direction.sqrMagnitude < 0.001f)
+        if (
+            direction.sqrMagnitude <
+            0.001f
+        )
+        {
             return;
+        }
 
         Quaternion targetRotation =
-            Quaternion.LookRotation(direction) *
-            Quaternion.Euler(0f, yawOffset, 0f);
+            Quaternion.LookRotation(
+                direction
+            ) *
+            Quaternion.Euler(
+                0f,
+                yawOffset,
+                0f
+            );
 
         roy.transform.rotation =
             Quaternion.Slerp(
                 roy.transform.rotation,
                 targetRotation,
-                faceRotationSpeed * Time.deltaTime
+                faceRotationSpeed *
+                Time.deltaTime
             );
     }
 }
